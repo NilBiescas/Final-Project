@@ -172,5 +172,9 @@ if __name__ == "__main__":
     #Graph_H, Last_Crawled_id   = crawler(Artist_id, 200, "BFS", "Graph_H.graphml")
     #Graph_fb = crawler(Last_Crawled_id, 200, strategy='BFS', out_filename = "Graph_fb.graphml")
 
+    DataFrame                = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/D.csv', index_col="song_id")
+    number_songs  = len(DataFrame.index)
+    number_artist = len(DataFrame.artists.unique())
+    number_albums = len(DataFrame.albums.unique())
     pass
     # ------------------- END OF MAIN ------------------------ #
