@@ -1,4 +1,4 @@
-# Graphs and network analysis in Spotyfy
+# Graphs and network analysis in Spotyfy 
 This project aims to explore differnt features of different artists in spotyfy, computing some relevant information about them and creating 
 some graphs starting from a given artist.
 
