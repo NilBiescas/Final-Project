@@ -15,7 +15,10 @@ Each folder Contains:
 
 We have decided to put a .ipynb file for each session as we consider that is more easy to run the code in cells.
   
-In the Session_4 you will find the Gephi folder there you can find the documents used to generate the visualization of the asked graphs, gB and gD.
+  
+The Report.ipynb contains all the code used to generate the response in all the reports
+  
+Also in the Session_4 you will find the Gephi folder there you can find the documents used to generate the visualization of the asked graphs, gB and gD.
 
 
 ## Contributors
