@@ -2,6 +2,7 @@
 This project aims to explore different features of different artists in spotify, computing some relevant information about them and creating 
 some graphs starting from a given artist.
 
+![image](https://github.com/NilBiescas/Final-Project/assets/98542048/44e8d5e2-ac72-4f58-a11a-74a349d722e7)
 
 ## Structure of the repositori
 
