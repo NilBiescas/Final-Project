@@ -187,7 +187,7 @@ def create_similarity_graph(artist_audio_features_df: pd.DataFrame, similarity: 
     # Add nodes and weighted edges to the graph
     graph.add_edges_from(edges_weights)
 
-    nx.write_graphml_lxml(graph, out_filename)
+    #nx.write_graphml(graph, out_filename)
     return graph
     # ----------------- END OF FUNCTION --------------------- #
 
