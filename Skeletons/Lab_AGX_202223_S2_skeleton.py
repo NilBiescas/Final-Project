@@ -25,17 +25,17 @@ def retrieve_bidirectional_edges(g: nx.DiGraph, out_filename: str) -> nx.Graph:
 
     bidirectional_edges = []    #List of tuples. Each tuple represents and edge
     nodes_attributes    = {}    #Dictionary to store all the information of the nodes
-    # Iterate over the edges of the directed graph
+
     for u, v in g.edges():       
         if g.has_edge(v, u):  # Check if both edges (v, u) and (u, v) exist
             bidirectional_edges.append((u, v))      #Store the nodes that have a bidirectional edge
             nodes_attributes[v] = g.nodes()[v]      #And their attributes
             nodes_attributes[u] = g.nodes()[u]
             
-    undirected_graph.add_edges_from(bidirectional_edges)    #Add all the new nodes, with the edges
+    undirected_graph.add_edges_from(bidirectional_edges)       
     nx.set_node_attributes(undirected_graph, nodes_attributes)  #Add the nodes attributes retrive earlier.
-    nx.write_graphml_lxml(undirected_graph, out_filename)  # Write the undirected graph to a GraphML file
-    return undirected_graph  # Return the undirected graph
+    nx.write_graphml_lxml(undirected_graph, out_filename) 
+    return undirected_graph  
     # ----------------- END OF FUNCTION --------------------- #
 
 def prune_low_degree_nodes(g: nx.Graph, min_degree: int, out_filename: str) -> nx.Graph:
@@ -52,19 +52,16 @@ def prune_low_degree_nodes(g: nx.Graph, min_degree: int, out_filename: str) -> n
     # Create a list of nodes to remove based on their degree being less than min_degree
     remove_nodes = [id for id, degree in g.degree() if degree < min_degree]
     
-    # Remove the nodes from the graph
     g.remove_nodes_from(remove_nodes)
 
     # Create a list of nodes with zero degree
     zero_degree_nodes = [id for id, degree in g.degree() if degree == 0]
     
-    # Remove the nodes with zero degree from the graph
     g.remove_nodes_from(zero_degree_nodes)
 
-    # ----------------- END OF FUNCTION --------------------- #
-    nx.write_graphml_lxml(g, out_filename)  # Write the pruned graph to a GraphML file
+    nx.write_graphml_lxml(g, out_filename)
     return g  # Return the pruned graph
-
+    # ----------------- END OF FUNCTION --------------------- #
 
 def prune_low_weight_edges(g: nx.Graph, min_weight=None, min_percentile=None, out_filename: str = None) -> nx.Graph:
     """
@@ -77,7 +74,7 @@ def prune_low_weight_edges(g: nx.Graph, min_weight=None, min_percentile=None, ou
     """
     # ------- IMPLEMENT HERE THE BODY OF THE FUNCTION ------- #
     if ((min_weight == None) and (min_percentile == None)) or ((min_weight != None) and (min_percentile != None)):
-        raise Exception  # Raise an exception if both min_weight and min_percentile are None or if both are not None.
+        raise Exception
     
     if min_percentile != None:
         sorted_weights = sorted([data["weight"] for _, _, data in g.edges(data=True)])  # Get a sorted list of edge weights
@@ -92,9 +89,6 @@ def prune_low_weight_edges(g: nx.Graph, min_weight=None, min_percentile=None, ou
     zero_degree_nodes = [id for id, degree in g.degree() if degree == 0]
     g.remove_nodes_from(zero_degree_nodes)
 
-    # Write the pruned graph to a file if out_filename is specified
-
-    # Uncomment the line below to save the pruned graph as a graphml file
     nx.write_graphml_lxml(g, out_filename)
     return g
 # ----------------- END OF FUNCTION --------------------- #
@@ -110,13 +104,14 @@ def compute_mean_audio_features(tracks_df: pd.DataFrame) -> pd.DataFrame:
     # ------- IMPLEMENT HERE THE BODY OF THE FUNCTION ------- #
     mean_audio_features = {}  # Dictionary to store mean audio features for each artist
 
-    # Convert string representations of dictionaries to actual dictionaries
+    # Convert string representations of dictionaries to actual dictionaries using the eval function
     tracks_df["audio_feature"] = tracks_df["audio_feature"].apply(eval)
     tracks_df["song_data"] = tracks_df["song_data"].apply(eval)
     tracks_df["artists"] = tracks_df["artists"].apply(eval)
     tracks_df['albums'] = tracks_df['albums'].apply(eval)
 
-    # Get unique artist names from the dataframe
+    # Get the artists names from the dataframe
+    # tracks_df contains dictionaries and we can use the .get method to retrive information from them
     artist_names = tracks_df['artists'].apply(lambda x: x.get('name')).unique()
 
     for artist_name in artist_names:
@@ -124,14 +119,15 @@ def compute_mean_audio_features(tracks_df: pd.DataFrame) -> pd.DataFrame:
         artist_id = filtered_df["artists"].iat[0]['id']  # Get the artist ID from the first row
 
         grouped_audio_features = defaultdict(int)  # Defaultdict to store aggregated audio features
-        num_songs = len(filtered_df)  # Number of songs for the artist
+        num_songs = len(filtered_df) 
 
-        for entry in filtered_df["audio_feature"].values:
+        for entry in filtered_df["audio_feature"].values:  
             for key in entry:
                 grouped_audio_features[key] += entry[key]  # Aggregate audio features
 
         # Calculate mean audio features
         mean_audio = {key: round(grouped_audio_features[key] / num_songs, 2) for key in grouped_audio_features}
+        # Add for a specific artist the mean audio features obtained
         mean_audio_features[artist_id] = {"artist_id":artist_id, 
                                           "artist_name": artist_name,                              
                                           "danceability": mean_audio['danceability'],
@@ -170,6 +166,7 @@ def create_similarity_graph(artist_audio_features_df: pd.DataFrame, similarity: 
     audio_features_mean = artist_audio_features_df[audio_features]
     artist_id = artist_audio_features_df['artist_id']
 
+    # Get all the pairs of artist and compute their similiarity using either cosine or eucildean distance
     for u in artist_id:
         vector1 = audio_features_mean.loc[u].values
         for v in artist_id:
@@ -182,12 +179,10 @@ def create_similarity_graph(artist_audio_features_df: pd.DataFrame, similarity: 
                 similarity = euclidean_similiarity(vector1, vector2)
             edges_weights.append((u, v, {"weight":similarity}))
 
-    # Create an empty graph
     graph = nx.Graph()
-    # Add nodes and weighted edges to the graph
     graph.add_edges_from(edges_weights)
 
-    #nx.write_graphml(graph, out_filename)
+    nx.write_graphml(graph, out_filename)
     return graph
     # ----------------- END OF FUNCTION --------------------- #
 
@@ -196,11 +191,13 @@ def create_similarity_graph(artist_audio_features_df: pd.DataFrame, similarity: 
 
 if __name__ == "__main__":
     # ------- IMPLEMENT HERE THE MAIN FOR THIS SESSION ------- #
+    """
+    In thise file we create the undirected edges. And we create the two weigthed graphs.
+    """
+    # Read Graphs B and Graph D obtained in the previous graph
 
-    # Read Graphs B and Graph D
-
-    path_graph_B = '/Users/nbiescas/Desktop/Graphs/Graphs_data/Graph_B.graphml'
-    path_graph_D = '/Users/nbiescas/Desktop/Graphs/Graphs_data/Graph_D.graphml'
+    path_graph_B = ''
+    path_graph_D = ''
     Graph_B = nx.read_graphml(path_graph_B)
     Graph_D = nx.read_graphml(path_graph_D)
 

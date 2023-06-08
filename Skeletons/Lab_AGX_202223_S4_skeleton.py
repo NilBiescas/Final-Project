@@ -2,8 +2,20 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-# ------- IMPLEMENT HERE ANY AUXILIARY FUNCTIONS NEEDED ------- #
+import networkx as nx
 
+from Lab_AGX_202223_S3_skeleton import get_degree_distribution
+# ------- IMPLEMENT HERE ANY AUXILIARY FUNCTIONS NEEDED ------- #
+def normalize_columns(artist_audio_feat_B):
+    columns_to_normalize = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',
+                        'liveness', 'valence', 'tempo']
+
+    for column in columns_to_normalize:
+        min_value = artist_audio_feat_B[column].min()
+        max_value = artist_audio_feat_B[column].max()
+        artist_audio_feat_B[column] = (artist_audio_feat_B[column] - min_value) / (max_value - min_value)
+    
+    return artist_audio_feat_B
 
 # --------------- END OF AUXILIARY FUNCTIONS ------------------ #
 
@@ -51,8 +63,8 @@ def plot_audio_features_bar(artists_audio_feat: pd.DataFrame, artist1_id: str, a
     :return: None
     """
     # Filter the dataframe for the two artists
-    artist1_data = artists_audio_feat[artists_audio_feat['artist_id'] == artist1_id]
-    artist2_data = artists_audio_feat[artists_audio_feat['artist_id'] == artist2_id]
+    artist1_data = artists_audio_feat[artists_audio_feat['artist_name'] == artist1_id]
+    artist2_data = artists_audio_feat[artists_audio_feat['artist_name'] == artist2_id]
 
     # Get the audio feature labels and their positions on the x-axis
     audio_features = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
@@ -97,8 +109,8 @@ def plot_audio_features_radar(artists_audio_feat: pd.DataFrame, artist1_id: str,
     :return: None
     """
     # Filter the dataframe for the two artists
-    artist1_data = artists_audio_feat[artists_audio_feat['artist_id'] == artist1_id]
-    artist2_data = artists_audio_feat[artists_audio_feat['artist_id'] == artist2_id]
+    artist1_data = artists_audio_feat[artists_audio_feat['artist_name'] == artist1_id]
+    artist2_data = artists_audio_feat[artists_audio_feat['artist_name'] == artist2_id]
 
     # Get the audio feature labels and their positions on the radar plot
     audio_features = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
@@ -174,5 +186,41 @@ def plot_similarity_heatmap(artist_audio_features: pd.DataFrame, similarity: str
 
 if __name__ == "__main__":
     # ------- IMPLEMENT HERE THE MAIN FOR THIS SESSION ------- #
+
+    Graph_B_und  = nx.read_graphml('/Users/nbiescas/Desktop/Graphs/Graphs_data/Undirected_graph_B.graphml')
+    Graph_D_und  = nx.read_graphml('/Users/nbiescas/Desktop/Graphs/Graphs_data/Undirected_graph_D.graphml')
+    Graph_B_w    = nx.read_graphml('/Users/nbiescas/Desktop/Graphs/Graphs_data/Weighted_Graph_B.graphml')
+
+    artist_audio_feat_B = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/Mean_Audio_Features_graph_B.csv', index_col='artist_id_index')
+    artist_audio_feat_D = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/Mean_Audio_Features_graph_D.csv', index_col='artist_id_index')
+    artists_audio_feat  = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/All_Mean_Audio_Features_graph.csv')
+
+    deg_dist_B = get_degree_distribution(Graph_B_und)
+    deg_dist_D = get_degree_distribution(Graph_D_und)
+    deg_dist_B_w = get_degree_distribution(Graph_B_w)
+
+    
+    plot_degree_distribution(deg_dist_B,   normalized = True, loglog= False)
+    plot_degree_distribution(deg_dist_D,   normalized = False, loglog = False)
+    plot_degree_distribution(deg_dist_B_w, normalized = False, loglog= False)
+
+
+    artist_audio_feat_B_norm = normalize_columns(artist_audio_feat_B)
+    plot_audio_features_bar(artist_audio_feat_B_norm, "Drake", "Lil Keed")
+    plot_audio_features_radar(artist_audio_feat_B_norm, "Drake", "Lil Keed")
+
+    plot_audio_features_bar(artist_audio_feat_B_norm, 'Drake', 'Lil Scrappy')
+    plot_audio_features_radar(artist_audio_feat_B_norm, 'Drake', 'Lil Scrappy')
+
+    artist_audio_feat_D_norm = normalize_columns(artist_audio_feat_D)
+
+    plot_audio_features_bar(artist_audio_feat_D_norm, "Drake", "Guerilla Maab")
+    plot_audio_features_radar(artist_audio_feat_D_norm, "Drake", "Guerilla Maab")
+
+    plot_audio_features_bar(artist_audio_feat_D_norm, "Drake", "Lil Sancho")
+    plot_audio_features_radar(artist_audio_feat_D_norm, "Drake", "Lil Sancho")
+
+
+    plot_similarity_heatmap(artists_audio_feat, "pearson", 'similarity_heatmap.png')
     pass
     # ------------------- END OF MAIN ------------------------ #

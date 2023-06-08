@@ -1,4 +1,4 @@
-,artist_id,artist_name,danceability,energy,loudness,speechiness,acousticness,instrumentalness,liveness,valence,tempo
+artist_id_index,artist_id,artist_name,danceability,energy,loudness,speechiness,acousticness,instrumentalness,liveness,valence,tempo
 1fQ46lgoUCz8FVXdTVNk0a,1fQ46lgoUCz8FVXdTVNk0a,Hurricane Chris,0.71,0.69,-5.89,0.28,0.04,0.0,0.18,0.53,128.63
 6Uo1hEkf3QaOtDEN5frwVq,6Uo1hEkf3QaOtDEN5frwVq,Westside Cartel,0.89,0.57,-9.31,0.28,0.22,0.0,0.23,0.64,108.23
 28gYepghWimZ3Eh8Gj2hOO,28gYepghWimZ3Eh8Gj2hOO,Lyrical,0.9,0.67,-5.91,0.28,0.22,0.0,0.15,0.63,104.2

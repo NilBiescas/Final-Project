@@ -1,4 +1,4 @@
-artist_id,artist_id,artist_name,danceability,energy,loudness,speechiness,acousticness,instrumentalness,liveness,valence,tempo
+artist_id_index,artist_id,artist_name,danceability,energy,loudness,speechiness,acousticness,instrumentalness,liveness,valence,tempo
 757aE44tKEUQEqRuT6GnEB,757aE44tKEUQEqRuT6GnEB,Roddy Ricch,0.79,0.58,-7.8,0.19,0.17,0.0,0.22,0.45,107.46
 13y7CgLHjMVRMDqxdx0Xdo,13y7CgLHjMVRMDqxdx0Xdo,Gucci Mane,0.78,0.61,-6.98,0.21,0.06,0.0,0.19,0.47,141.9
 1fQ46lgoUCz8FVXdTVNk0a,1fQ46lgoUCz8FVXdTVNk0a,Hurricane Chris,0.71,0.69,-5.89,0.28,0.04,0.0,0.18,0.53,128.63

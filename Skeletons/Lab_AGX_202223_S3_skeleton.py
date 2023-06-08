@@ -15,14 +15,15 @@ def num_common_nodes(*arg):
     :return: an integer, number of common nodes.
     """
     # ------- IMPLEMENT HERE THE BODY OF THE FUNCTION ------- #
-    common_nodes = set(arg[0].nodes)
-    for graph in arg[1:]:
-        nodes = set(graph.nodes)
-        common_nodes = common_nodes.intersection(nodes)
+    if (len(arg) > 0) and (len(arg[0]) > 0): #Check that the input is valid    
+        
+        common_nodes = set(arg[0].nodes) 
+        for graph in arg[1:]:
+            nodes = set(graph.nodes)
+            common_nodes = common_nodes.intersection(nodes)
 
     return len(common_nodes)
     # ----------------- END OF FUNCTION --------------------- #
-
 
 def get_degree_distribution(g: nx.Graph) -> dict:
     """
@@ -90,19 +91,22 @@ def detect_communities(g: nx.Graph, method: str) -> tuple:
     """
     # ------- IMPLEMENT HERE THE BODY OF THE FUNCTION ------- #
     if method == "girvan_newman":
-        communities = list(girvan_newman(g))
-        
+        communities = girvan_newman(g)
+    
     elif method == "louvain":
         communities = louvain_communities(g)
-        
+
     modularity_partition = modularity(g, communities)
 
-    return (communities, modularity_partition)
+    return communities, modularity_partition
 
     # ----------------- END OF FUNCTION --------------------- #
 
 
 if __name__ == '__main__':
     # ------- IMPLEMENT HERE THE MAIN FOR THIS SESSION ------- #
+    """
+    All the functions in these file are used in the Report.ipynb file
+    """
     pass
     # ------------------- END OF MAIN ------------------------ #

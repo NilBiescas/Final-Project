@@ -161,21 +161,26 @@ def get_track_data(graphs: list, out_filename: str) -> pd.DataFrame:
 
 if __name__ == "__main__":
     # ------- IMPLEMENT HERE THE MAIN FOR THIS SESSION ------- #
+    """
+    These main generates all the graphs and csv needed for the next sessions. 
+    We also generate two dataframes, one from the Graph B and another one from the Graph D
+    """
 
-    #Artist_id  = search_artist("Drake")
-    #Graph_B, _ = crawler(Artist_id, 200, "BFS", "Graph_B.graphml")
-    #Graph_D, Last_Crawled_id = crawler(Artist_id, 200, "DFS", "Graph_D.graphml")
-    #
-    #    Artist_id    = search_artist("French Montana")
-    #Graph_HB, _  = crawler(Artist_id, 200, "BFS", "Graph_HB.graphml")
-    #Graph_fb, _  = crawler(Last_Crawled_id, 200, strategy='BFS', out_filename = "Graph_FB.graphml")
-
-    #D_dataframe = get_track_data([Graph_B, Graph_D], 'D.csv') 
+    Artist_id  = search_artist("Drake")
+    Graph_B, _ = crawler(Artist_id, 200, "BFS", "Graph_B.graphml")
+    Graph_D, Last_Crawled_id = crawler(Artist_id, 200, "DFS", "Graph_D.graphml")
     
+    Artist_id    = search_artist("French Montana")
+    Graph_HB, _  = crawler(Artist_id, 200, "BFS", "Graph_HB.graphml")
+    Graph_fb, _  = crawler(Last_Crawled_id, 200, strategy='BFS', out_filename = "Graph_FB.graphml")
 
-    DataFrame                = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/D.csv', index_col="song_id")
-    number_songs  = len(DataFrame.index)
-    number_artist = len(DataFrame.artists.unique())
-    number_albums = len(DataFrame.albums.unique())
+    D_dataframe = get_track_data([Graph_B, Graph_D], 'D.csv')    
+    D_dataframe = get_track_data([Graph_B], 'Pandas_Graph_B.csv') 
+    D_dataframe = get_track_data([Graph_D], 'Pandas_Graph_D.csv') 
+
+    #DataFrame                = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/D.csv', index_col="song_id")
+    #number_songs  = len(DataFrame.index)
+    #number_artist = len(DataFrame.artists.unique())
+    #number_albums = len(DataFrame.albums.unique())
     pass
     # ------------------- END OF MAIN ------------------------ #
