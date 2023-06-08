@@ -22,7 +22,13 @@ Also in the Session_4 you will find the Gephi folder there you can find the docu
 
 
 ## Contributors
-Authors: Nil Biescas, Xavi Soto
+
+| Authors | NIU|
+|----------|----------|
+|  Nil Biescas   | 1636326   |
+| Xavi Soto    | 1633733   | 
+
+
 Subject: Graphs and Networks
 
 Degreee in Artificial Intelligence, 2n course.
