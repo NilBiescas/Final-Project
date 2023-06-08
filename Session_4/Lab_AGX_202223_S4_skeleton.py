@@ -3,9 +3,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import networkx as nx
-
-from Lab_AGX_202223_S3_skeleton import get_degree_distribution
 # ------- IMPLEMENT HERE ANY AUXILIARY FUNCTIONS NEEDED ------- #
+
+
+def get_degree_distribution(g: nx.Graph) -> dict:
+    """
+    Get the degree distribution of the graph.
+
+    :param g: networkx graph.
+    :return: dictionary with degree distribution (keys are degrees, values are number of occurrences).
+    """
+    # ------- IMPLEMENT HERE THE BODY OF THE FUNCTION ------- #
+    degree_count = nx.degree_histogram(g)
+    degree_distribution = {degree: count for degree, count in enumerate(degree_count)}
+    return degree_distribution
+    # ----------------- END OF FUNCTION --------------------- #
+
 def normalize_columns(artist_audio_feat_B):
     columns_to_normalize = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',
                         'liveness', 'valence', 'tempo']
