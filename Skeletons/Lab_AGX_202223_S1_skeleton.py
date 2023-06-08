@@ -162,15 +162,16 @@ def get_track_data(graphs: list, out_filename: str) -> pd.DataFrame:
 if __name__ == "__main__":
     # ------- IMPLEMENT HERE THE MAIN FOR THIS SESSION ------- #
 
-    #Artist_id  = search_artist("Drake", sp)
+    #Artist_id  = search_artist("Drake")
     #Graph_B, _ = crawler(Artist_id, 200, "BFS", "Graph_B.graphml")
-    #Graph_D, _ = crawler(Artist_id, 200, "DFS", "Graph_D.graphml")
+    #Graph_D, Last_Crawled_id = crawler(Artist_id, 200, "DFS", "Graph_D.graphml")
     #
+    #    Artist_id    = search_artist("French Montana")
+    #Graph_HB, _  = crawler(Artist_id, 200, "BFS", "Graph_HB.graphml")
+    #Graph_fb, _  = crawler(Last_Crawled_id, 200, strategy='BFS', out_filename = "Graph_FB.graphml")
+
     #D_dataframe = get_track_data([Graph_B, Graph_D], 'D.csv') 
-    #
-    #Artist_id = search_artist("French Montana", sp)
-    #Graph_H, Last_Crawled_id   = crawler(Artist_id, 200, "BFS", "Graph_H.graphml")
-    #Graph_fb = crawler(Last_Crawled_id, 200, strategy='BFS', out_filename = "Graph_fb.graphml")
+    
 
     DataFrame                = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/D.csv', index_col="song_id")
     number_songs  = len(DataFrame.index)
