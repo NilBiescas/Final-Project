@@ -196,5 +196,34 @@ def create_similarity_graph(artist_audio_features_df: pd.DataFrame, similarity: 
 
 if __name__ == "__main__":
     # ------- IMPLEMENT HERE THE MAIN FOR THIS SESSION ------- #
-    pass
+
+    # Read Graphs B and Graph D
+
+    path_graph_B = '/Users/nbiescas/Desktop/Graphs/Graphs_data/Graph_B.graphml'
+    path_graph_D = '/Users/nbiescas/Desktop/Graphs/Graphs_data/Graph_D.graphml'
+    Graph_B = nx.read_graphml(path_graph_B)
+    Graph_D = nx.read_graphml(path_graph_D)
+
+
+    #Obtantion of the undirected graphs
+
+    Undirected_graph_B = retrieve_bidirectional_edges(Graph_B, "Undirected_graph_B.graphml")
+    Undirected_graph_D = retrieve_bidirectional_edges(Graph_D, "Undirected_graph_D.graphml")
+
+    # Obtain the two dataframes of each graph
+    Pandas_Graph_B = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/Pandas_Graph_B.csv', index_col="song_id")
+    Pandas_Graph_D = pd.read_csv('/Users/nbiescas/Desktop/Graphs/Graphs_data/Pandas_Graph_D.csv', index_col="song_id")
+
+    # Compute the mean audio features for each graph
+    artist_audio_features_graph_B = compute_mean_audio_features(Pandas_Graph_B)
+    artist_audio_features_graph_D = compute_mean_audio_features(Pandas_Graph_D)
+
+    # Obtain the similiarity graphs for each case the B and D
+    CompleteGraph_B           = create_similarity_graph(artist_audio_features_graph_B, similarity = 'cosine', out_filename = "CompleteGraph_B.graphml") 
+    CompleteGraph_D           = create_similarity_graph(artist_audio_features_graph_D, similarity = 'cosine', out_filename = "CompleteGraph_D.graphml") 
+
+    # Finally obtain the weighted graphs
+    Undirected_graph_B_weights = prune_low_weight_edges(CompleteGraph_B, min_weight = 0.45, out_filename='Weighted_Graph_B.graphml')
+    Undirected_graph_D_weights = prune_low_weight_edges(CompleteGraph_D, min_weight = 0.31, out_filename='Weighted_Graph_D.graphml')
+
     # ------------------- END OF MAIN ------------------------ #
