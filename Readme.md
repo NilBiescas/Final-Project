@@ -6,9 +6,16 @@ some graphs starting from a given artist.
 
 ## Structure of the repositori
 
-For each session we have create a folder which contains the report, the skeleton.py along with a .ipynb file also with the code of that session and the data generated in that session. We have decided to put a .ipynb file for each session as we consider that is more easy to run the code in cells.
+For each session we have create a folder.
+Each folder Contains:
+1. The pdf report
+2. the skeleton.py 
+3. An .ipynb file also with the code of that session
+4. The data generated in that session.
 
-In the Session_4 you will find the Gephi folder, you can find the documents used to generate the visualization of the asked graphs, gB and gD.
+We have decided to put a .ipynb file for each session as we consider that is more easy to run the code in cells.
+  
+In the Session_4 you will find the Gephi folder there you can find the documents used to generate the visualization of the asked graphs, gB and gD.
 
 
 ## Contributors
